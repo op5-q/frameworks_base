@@ -5076,6 +5076,15 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * media artwork wallpaper on lockscreen
+         * @hide
+         */
+        public static final String SHOW_LOCKSCREEN_MEDIA_ART = "show_lockscreen_media_art";
+        /** @hide */
+        private static final Validator SHOW_LOCKSCREEN_MEDIA_ART_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5191,6 +5200,7 @@ public final class Settings {
 	    OMNI_ASPECT_RATIO_APPS_ENABLED,
             OMNI_ASPECT_RATIO_APPS_LIST,
             NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE,
+            SHOW_LOCKSCREEN_MEDIA_ART,
         };
 
         /**
@@ -5366,6 +5376,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE);
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
+            PRIVATE_SETTINGS.add(SHOW_LOCKSCREEN_MEDIA_ART);
         }
 
         /**
@@ -5520,6 +5531,7 @@ public final class Settings {
                     OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
             VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES, ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
+            VALIDATORS.put(SHOW_LOCKSCREEN_MEDIA_ART, SHOW_LOCKSCREEN_MEDIA_ART_VALIDATOR);
         }
 
         /**

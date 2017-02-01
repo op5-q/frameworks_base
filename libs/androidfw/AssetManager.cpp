@@ -752,65 +752,6 @@ Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
     return ass;
 }
 
-void AssetManager::addSystemOverlays(const char* pathOverlaysList,
-        const String8& targetPackagePath, ResTable* sharedRes, size_t offset) const
-{
-    FILE* fin = fopen(pathOverlaysList, "r");
-    if (fin == NULL) {
-        return;
-    }
-
-#ifndef _WIN32
-    if (TEMP_FAILURE_RETRY(flock(fileno(fin), LOCK_SH)) != 0) {
-        fclose(fin);
-        return;
-    }
-#endif
-    char buf[1024];
-    while (fgets(buf, sizeof(buf), fin)) {
-        // format of each line:
-        //   <path to apk><space><path to idmap><newline>
-        char* space = strchr(buf, ' ');
-        char* newline = strchr(buf, '\n');
-        asset_path oap;
-
-        if (space == NULL || newline == NULL || newline < space) {
-            continue;
-        }
-
-        oap.path = String8(buf, space - buf);
-        oap.type = kFileTypeRegular;
-        oap.idmap = String8(space + 1, newline - space - 1);
-        oap.isSystemOverlay = true;
-
-        Asset* oass = const_cast<AssetManager*>(this)->
-            openNonAssetInPathLocked("resources.arsc",
-                    Asset::ACCESS_BUFFER,
-                    oap);
-
-        if (oass != NULL) {
-            Asset* oidmap = openIdmapLocked(oap);
-            offset++;
-            sharedRes->add(oass, oidmap, offset + 1, false);
-            const_cast<AssetManager*>(this)->mAssetPaths.add(oap);
-            const_cast<AssetManager*>(this)->mZipSet.addOverlay(targetPackagePath, oap);
-
-            oidmap->close();
-            ALOGD("close idmap=%s pid=%d\n", oap.idmap.string(), getpid());
-       }
-
-        if (oap.path.find(OVERLAY_DIR) != -1) {
-           const_cast<AssetManager*>(this)->mZipSet.closeZipFromPath(oap.path);
-           ALOGD("close: %s and reset entry\n", oap.path.string());
-      }
-  }
-
-#ifndef _WIN32
-    TEMP_FAILURE_RETRY(flock(fileno(fin), LOCK_UN));
-#endif
-    fclose(fin);
-}
-
 const ResTable& AssetManager::getResources(bool required) const
 {
     const ResTable* rt = getResTable(required);
@@ -1987,22 +1928,6 @@ AssetManager::ZipSet::~ZipSet(void)
     size_t N = mZipFile.size();
     for (size_t i = 0; i < N; i++)
         closeZip(i);
-}
-
-/*
- * Close a Zip file from path and reset the entry
- */
-void AssetManager::ZipSet::closeZipFromPath(const String8& zip)
-{
-    //close zip fd
-    int fd = getZip(zip)->getFileDescriptor();
-
-    if (fd > 0) {
-        close(fd);
-        //reset zip object and entry
-        int idx = getIndex(zip);
-        mZipFile.editItemAt(idx) = NULL;
-    }
 }
 
 /*

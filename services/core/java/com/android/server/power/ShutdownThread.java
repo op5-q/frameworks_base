@@ -63,6 +63,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.lang.reflect.Method;
+
 public final class ShutdownThread extends Thread {
     // constants
     private static final String TAG = "ShutdownThread";
@@ -192,6 +194,10 @@ public final class ShutdownThread extends Thread {
                     .setTitle(mRebootSafeMode
                             ? com.android.internal.R.string.reboot_safemode_title
                             : showRebootOption
+                                    ? com.android.internal.R.string.reboot_title
+                                    : com.android.internal.R.string.power_off)
+                    .setMessage(resourceId)
+                    .setPositiveButton(com.android.internal.R.string.yes, new DialogInterface.OnClickListener() {
                                     ? com.android.internal.R.string.global_action_reboot
                                     : com.android.internal.R.string.power_off);
 
@@ -373,8 +379,13 @@ public final class ShutdownThread extends Thread {
             pd.setMessage(context.getText(com.android.internal.R.string.reboot_progress));
             pd.setIndeterminate(true);
         } else {
-            pd.setTitle(context.getText(com.android.internal.R.string.power_off));
-            pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
+            if (mReboot) {
+                pd.setTitle(context.getText(com.android.internal.R.string.reboot_title));
+                pd.setMessage(context.getText(com.android.internal.R.string.reboot_progress));
+            } else {
+                pd.setTitle(context.getText(com.android.internal.R.string.power_off));
+                pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
+            }
             pd.setIndeterminate(true);
         }
         pd.setCancelable(false);
@@ -581,6 +592,13 @@ public final class ShutdownThread extends Thread {
                     AlarmManager.POWER_OFF_ALARM_HANDLED);
         }
 
+        // If it is factory data reset, value in POWER_OFF_ALARM_TIMEZONE_FILE will be cleared.
+        if (mReboot && PowerManager.REBOOT_RECOVERY.equals(mReason)) {
+            AlarmManager.writePowerOffAlarmFile(AlarmManager.POWER_OFF_ALARM_TIMEZONE_FILE, "");
+        } else {
+            AlarmManager.writePowerOffAlarmFile(AlarmManager.POWER_OFF_ALARM_TIMEZONE_FILE,
+                    SystemProperties.get("persist.sys.timezone"));
+        }
         rebootOrShutdown(mContext, mReboot, mReason);
     }
 
@@ -630,7 +648,8 @@ public final class ShutdownThread extends Thread {
                 }
 
                 try {
-                    bluetoothOff = bluetooth == null || !bluetooth.isEnabled();
+                    bluetoothOff = bluetooth == null ||
+                            bluetooth.getState() == BluetoothAdapter.STATE_OFF;
                     if (!bluetoothOff) {
                         Log.w(TAG, "Disabling Bluetooth...");
                         bluetooth.disable(false);  // disable but don't persist new state
@@ -664,7 +683,7 @@ public final class ShutdownThread extends Thread {
 
                     if (!bluetoothOff) {
                         try {
-                            bluetoothOff = !bluetooth.isEnabled();
+                            bluetoothOff = bluetooth.getState() == BluetoothAdapter.STATE_OFF;
                         } catch (RemoteException ex) {
                             Log.e(TAG, "RemoteException during bluetooth shutdown", ex);
                             bluetoothOff = true;
@@ -719,6 +738,33 @@ public final class ShutdownThread extends Thread {
     }
 
     /**
+     * OEM shutdown handler. This function will load the oem-services jar file
+     * and call into the rebootOrShutdown method defined there if present
+     */
+    private static void deviceRebootOrShutdown(boolean reboot, String reason)
+    {
+            Class<?> cl;
+            String deviceShutdownClassName = "com.qti.server.power.ShutdownOem";
+            String deviceShutdownMethodName = "rebootOrShutdown";
+            try {
+                    cl = Class.forName(deviceShutdownClassName);
+                    Method m;
+                    try {
+                        m = cl.getMethod(deviceShutdownMethodName, new Class[] {boolean.class, String.class});
+                        m.invoke(cl.newInstance(), reboot, reason);
+                    } catch (NoSuchMethodException ex) {
+                        Log.e(TAG, "Unable to find method " + deviceShutdownMethodName + " in class " + deviceShutdownClassName);
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Unknown exception while trying to invoke " + deviceShutdownMethodName);
+                    }
+            } catch (ClassNotFoundException e) {
+                Log.e(TAG, "Unable to find class " + deviceShutdownClassName);
+            } catch (Exception e) {
+                Log.e(TAG, "Unknown exception while loading class " + deviceShutdownClassName);
+            }
+    }
+
+    /**
      * Do not call this directly. Use {@link #reboot(Context, String, boolean)}
      * or {@link #shutdown(Context, boolean)} instead.
      *
@@ -727,6 +773,8 @@ public final class ShutdownThread extends Thread {
      * @param reason reason for reboot/shutdown
      */
     public static void rebootOrShutdown(final Context context, boolean reboot, String reason) {
+        // Call oem shutdown handler
+        deviceRebootOrShutdown(reboot, reason);
         if (reboot) {
             Log.i(TAG, "Rebooting, reason: " + reason);
             PowerManagerService.lowLevelReboot(reason);
@@ -803,6 +851,14 @@ public final class ShutdownThread extends Thread {
         }
         if (!done[0]) {
             Log.w(TAG, "Timed out waiting for uncrypt.");
+            final int uncryptTimeoutError = 100;
+            String timeoutMessage = String.format("uncrypt_time: %d\n" + "uncrypt_error: %d\n",
+                    MAX_UNCRYPT_WAIT_TIME / 1000, uncryptTimeoutError);
+            try {
+                FileUtils.stringToFile(RecoverySystem.UNCRYPT_STATUS_FILE, timeoutMessage);
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to write timeout message to uncrypt status", e);
+            }
         }
     }
 }

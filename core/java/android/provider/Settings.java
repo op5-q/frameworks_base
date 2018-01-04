@@ -5002,6 +5002,13 @@ public final class Settings {
         /** @hide */
         private static final Validator OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR =
                 ANY_STRING_VALIDATOR;
+        /**
+         * Wheter to play notification sound and vibration if screen is ON
+         * 0 - never
+         * 1 - always
+         * @hide
+         */
+        public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
         /**
          * @hide

@@ -204,12 +204,13 @@ import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.StatsLog;
-import android.util.TimeUtils;
 import android.util.Xml;
 import android.util.proto.ProtoOutputStream;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Toast;
+import android.util.TimeUtils;
+import java.util.Map;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -268,7 +269,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
@@ -402,6 +402,8 @@ public class NotificationManagerService extends SystemService {
     boolean mScreenOn = true;
     protected boolean mInCallStateOffHook = false;
     boolean mNotificationPulseEnabled;
+
+    private boolean mSoundVibScreenOn;
 
     private Uri mInCallNotificationUri;
     private AudioAttributes mInCallNotificationAudioAttributes;
@@ -905,7 +907,7 @@ public class NotificationManagerService extends SystemService {
         @Override
         public void onNotificationError(int callingUid, int callingPid, String pkg, String tag,
                 int id, int uid, int initialPid, String message, int userId) {
-            final boolean fgService;
+	    final boolean fgService;
             synchronized (mNotificationLock) {
                 NotificationRecord r = findNotificationLocked(pkg, tag, id, userId);
                 fgService = r != null && (r.getNotification().flags & FLAG_FOREGROUND_SERVICE) != 0;
@@ -1393,6 +1395,8 @@ public class NotificationManagerService extends SystemService {
                 = Settings.System.getUriFor(Settings.System.NOTIFICATION_LIGHT_PULSE);
         private final Uri NOTIFICATION_RATE_LIMIT_URI
                 = Settings.Global.getUriFor(Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE);
+        private final Uri NOTIFICATION_SOUND_VIB_SCREEN_ON
+                = Settings.System.getUriFor(Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON);
 
         SettingsObserver(Handler handler) {
             super(handler);
@@ -1409,6 +1413,8 @@ public class NotificationManagerService extends SystemService {
             resolver.registerContentObserver(NOTIFICATION_BUBBLES_URI_GLOBAL,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(NOTIFICATION_BUBBLES_URI_SECURE,
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(NOTIFICATION_SOUND_VIB_SCREEN_ON,
                     false, this, UserHandle.USER_ALL);
             update(null);
         }
@@ -1441,6 +1447,11 @@ public class NotificationManagerService extends SystemService {
             if (uri == null || NOTIFICATION_BUBBLES_URI_GLOBAL.equals(uri)) {
                 syncBubbleSettings(resolver, NOTIFICATION_BUBBLES_URI_GLOBAL);
                 mPreferencesHelper.updateBubblesEnabled();
+            }
+            if (uri == null || NOTIFICATION_SOUND_VIB_SCREEN_ON.equals(uri)) {
+                mSoundVibScreenOn = Settings.System.getIntForUser(resolver,
+                        Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON, 1,
+                        UserHandle.USER_CURRENT) == 1;
             }
             if (NOTIFICATION_BUBBLES_URI_SECURE.equals(uri)) {
                 syncBubbleSettings(resolver, NOTIFICATION_BUBBLES_URI_SECURE);
@@ -4682,7 +4693,6 @@ public class NotificationManagerService extends SystemService {
                 pw.println("\n  Usage Stats:");
                 mUsageStats.dump(pw, "    ", filter);
             }
-
             long now = SystemClock.elapsedRealtime();
             pw.println("\n  Last notification sound timestamps:");
             for (Map.Entry<String, Long> entry : mLastSoundTimestamps.entrySet()) {
@@ -5887,8 +5897,10 @@ public class NotificationManagerService extends SystemService {
         }
 
         if (aboveThreshold && isNotificationForCurrentUser(record)) {
-
-            if (mSystemReady && mAudioManager != null) {
+            boolean beNoisy = !mScreenOn
+                    // if mScreenOn && !mSoundVibScreenOn never be noisy
+                    || (mScreenOn && mSoundVibScreenOn);
+            if (mSystemReady && mAudioManager != null && beNoisy) {
                 Uri soundUri = record.getSound();
                 hasValidSound = soundUri != null && !Uri.EMPTY.equals(soundUri);
                 long[] vibration = record.getVibration();

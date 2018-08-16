@@ -4745,6 +4745,15 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String FORCE_SHOW_NAVBAR = "navigation_bar_show_new";
+
+        /** @hide */
+        private static final Validator FORCE_SHOW_NAVBAR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
          * Whether the Home button works during call
          * @hide
          */
@@ -5665,6 +5674,7 @@ public final class Settings {
             PULSE_SOLID_UNITS_COUNT,
             PULSE_SOLID_UNITS_OPACITY,
             PULSE_SMOOTHING_ENABLED,
+            FORCE_SHOW_NAVBAR,
         };
 
         /**
@@ -5845,6 +5855,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_PULSE_FOR_ALL);
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
         }
 
         /**
@@ -6024,6 +6035,7 @@ public final class Settings {
             VALIDATORS.put(PULSE_SOLID_UNITS_COUNT, PULSE_SOLID_UNITS_COUNT_VALIDATOR);
             VALIDATORS.put(PULSE_SOLID_UNITS_OPACITY, PULSE_SOLID_UNITS_OPACITY_VALIDATOR);
             VALIDATORS.put(PULSE_SMOOTHING_ENABLED, PULSE_SMOOTHING_ENABLED_VALIDATOR);
+            VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
         }
 
         /**

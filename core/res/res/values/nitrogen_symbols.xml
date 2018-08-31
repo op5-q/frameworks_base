@@ -51,10 +51,13 @@
   <java-symbol type="string" name="url_copy_success" />
   <java-symbol type="string" name="url_copy_failed" />
 
-    <!-- Whether notify fingerprint client of successful cancelled authentication -->
-    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
+  <!-- Whether notify fingerprint client of successful cancelled authentication -->
+  <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
 
-   <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
-    <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
+  <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+  <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
+
+  <!-- Whether to allow process with media UID to access CameraServiceProxy -->
+  <java-symbol type="bool" name="config_allowMediaUidForCameraServiceProxy" />
 
 </resources>

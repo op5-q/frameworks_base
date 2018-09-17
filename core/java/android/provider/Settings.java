@@ -3384,6 +3384,17 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
                 "lockscreen_quick_unlock_control";
+
+	 /**
+         * Force show navigation bar setting.
+         * @hide
+         */
+        public static final String FORCE_SHOW_NAVBAR = "force_show_navbar";
+
+         /** @hide */
+        public static final Validator FORCE_SHOW_NAVBAR_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * @hide
          */
@@ -5240,6 +5251,7 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(DEVICE_FEATURE_SETTINGS);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
+	    PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
         }
 
         /**
@@ -5387,6 +5399,7 @@ public final class Settings {
                     DOUBLE_TAP_SLEEP_GESTURE_VALIDATOR);
             VALIDATORS.put(DOUBLE_TAP_SLEEP_LOCKSCREEN,
                     DOUBLE_TAP_SLEEP_LOCKSCREEN_VALIDATOR);
+	    VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
         }
 
         /**

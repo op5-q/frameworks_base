@@ -46,6 +46,7 @@ import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
@@ -91,6 +92,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<HWKeysTile> mHWKeysTileProvider;
     private final Provider<UsbTetherTile> mUsbTetherTileProvider;
+    private final Provider<ScreenrecordTile> mScrTileProvider;
 
     private QSTileHost mHost;
 
@@ -121,7 +123,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<HWKeysTile> hWKeysTileProvider,
-            Provider<UsbTetherTile> usbTetherTileProvider) {
+            Provider<UsbTetherTile> usbTetherTileProvider,
+            Provider<ScreenrecordTile> scrTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -149,6 +152,7 @@ public class QSFactoryImpl implements QSFactory {
         mHeadsUpTileProvider = headsUpTileProvider;
         mHWKeysTileProvider = hWKeysTileProvider;
         mUsbTetherTileProvider = usbTetherTileProvider;
+        mScrTileProvider = scrTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -218,6 +222,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mHWKeysTileProvider.get();
             case "usb_tether":
                 return mUsbTetherTileProvider.get();
+            case "scr":
+                return mScrTileProvider.get();
         }
 
         // Intent tiles.

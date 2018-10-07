@@ -113,4 +113,7 @@
         <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
     <string name="global_action_screenshot_cust">"Screen/Rec"</string>
 
+	<!-- Omni Record QS tile -->
+    <string name="quick_settings_screenrecord_label">Screenrecord</string>
+
 </resources>

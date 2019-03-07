@@ -1144,10 +1144,10 @@ public class LockSettingsService extends ILockSettings.Stub {
         return mStorage.hasCredential(userId);
     }
 
-    public void retainPassword(byte[] password) {
+    public void retainPassword(String password) {
         if (LockPatternUtils.isDeviceEncryptionEnabled()) {
             if (password != null)
-                mSavePassword = new String(password);
+                mSavePassword = password;
             else
                 mSavePassword = DEFAULT_PASSWORD;
         }
@@ -1177,7 +1177,7 @@ public class LockSettingsService extends ILockSettings.Stub {
          */
        if (checkCryptKeeperPermissions())
             mContext.enforceCallingOrSelfPermission(
-                    android.Manifest.permission.MANAGE_DEVICE_ADMINS,
+                    android.Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE,
                     "no crypt_keeper or admin permission to get the password");
 
        return mSavePassword;
@@ -1849,12 +1849,7 @@ public class LockSettingsService extends ILockSettings.Stub {
     public VerifyCredentialResponse checkCredential(byte[] credential, int type, int userId,
             ICheckCredentialProgressCallback progressCallback) throws RemoteException {
         checkPasswordReadPermission(userId);
-        VerifyCredentialResponse response = doVerifyCredential(credential, type, CHALLENGE_NONE, 0, userId, progressCallback);
-        if ((response.getResponseCode() == VerifyCredentialResponse.RESPONSE_OK) &&
-                                           (userId == UserHandle.USER_OWNER)) {
-                retainPassword(credential);
-        }
-        return response;
+        return doVerifyCredential(credential, type, CHALLENGE_NONE, 0, userId, progressCallback);
     }
 
     @Override

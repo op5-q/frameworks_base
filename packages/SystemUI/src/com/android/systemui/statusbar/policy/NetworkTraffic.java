@@ -94,11 +94,11 @@ public class NetworkTraffic extends TextView {
                 mTrafficVisible = false;
             } else if (!mIsOnStatusBar) {
                 // Get information for uplink ready so the line return can be added
-                String output = formatOutput(timeDelta, txData, symbol) + (mHideArrow ? "" : "\u25b2");
+                String output = formatOutput(timeDelta, txData, symbol);
                 // Ensure text size is where it needs to be
                 output += "\n";
                 // Add information for downlink if it's called for
-                output += formatOutput(timeDelta, rxData, symbol) + (mHideArrow ? "" : "\u25bc");
+                output += formatOutput(timeDelta, rxData, symbol);
 
                 // Update view if there's anything new to show
                 if (! output.contentEquals(getText())) {

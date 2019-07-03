@@ -352,6 +352,14 @@ public final class DeviceConfig {
          * Events that happen in-between will be silently dropped.
          *
          * A non-positive value disables logging.
+         *
+         * @see android.provider.DeviceConfig#NAMESPACE_WINDOW_MANAGER
+         * @hide
+         */
+        String KEY_SYSTEM_GESTURE_EXCLUSION_LOG_DEBOUNCE_MILLIS =
+                "system_gesture_exclusion_log_debounce_millis";
+
+        /**
          * Key for controlling which packages are explicitly blocked from running at refresh rates
          * higher than 60hz.
          *

@@ -2566,10 +2566,10 @@ public class PackageManagerService extends IPackageManager.Stub
             File frameworkDir = new File(Environment.getRootDirectory(), "framework");
 
             final VersionInfo ver = mSettings.getInternalVersion();
-            mIsUpgrade = !Build.NITROGEN_FINGERPRINT.equals(ver.fingerprint);
+            mIsUpgrade = !Build.FINGERPRINT.equals(ver.fingerprint);
             if (mIsUpgrade) {
                 logCriticalInfo(Log.INFO,
-                        "Upgrading from " + ver.fingerprint + " to " + Build.NITROGEN_FINGERPRINT);
+                        "Upgrading from " + ver.fingerprint + " to " + Build.FINGERPRINT);
             }
 
             // when upgrading from pre-M, promote system app permissions from install to runtime
@@ -3278,7 +3278,7 @@ public class PackageManagerService extends IPackageManager.Stub
                                         | Installer.FLAG_CLEAR_CODE_CACHE_ONLY);
                     }
                 }
-                ver.fingerprint = Build.NITROGEN_FINGERPRINT;
+                ver.fingerprint = Build.FINGERPRINT;
             }
 
             // Grandfather existing (installed before Q) non-system apps to hide
@@ -3662,7 +3662,7 @@ public class PackageManagerService extends IPackageManager.Stub
         // identify cached items. In particular, changing the value of certain
         // feature flags should cause us to invalidate any caches.
         final String cacheName = SystemProperties.digestOf(
-                Build.PROP_NITROGEN_FINGERPRINT,
+                "ro.build.fingerprint",
                 StorageManager.PROP_ISOLATED_STORAGE,
                 StorageManager.PROP_ISOLATED_STORAGE_SNAPSHOT);
 
@@ -22722,7 +22722,7 @@ public class PackageManagerService extends IPackageManager.Stub
                     Slog.w(TAG, "Failed to scan " + ps.codePath + ": " + e.getMessage());
                 }
 
-                if (!Build.NITROGEN_FINGERPRINT.equals(ver.fingerprint)) {
+                if (!Build.FINGERPRINT.equals(ver.fingerprint)) {
                     clearAppDataLIF(ps.pkg, UserHandle.USER_ALL, FLAG_STORAGE_DE | FLAG_STORAGE_CE
                             | FLAG_STORAGE_EXTERNAL | Installer.FLAG_CLEAR_CODE_CACHE_ONLY);
                 }

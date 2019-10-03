@@ -117,7 +117,7 @@ static jint android_os_VintfObject_verify(JNIEnv* env, jclass, jobjectArray pack
 
 static jint android_os_VintfObject_verifyWithoutAvb(JNIEnv* env, jclass) {
     std::string error;
-    int32_t status = VintfObject::CheckCompatibility({}, &error;
+    int32_t status = VintfObject::CheckCompatibility({}, &error);
     if (status)
         LOG(WARNING) << "VintfObject.verifyWithoutAvb() returns " << status << ": " << error;
     return status;

@@ -5085,6 +5085,24 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to enable Ambient edge light
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT = "pulse_ambient_light";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_LIGHT_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * What color to use for Ambient edge light
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT_COLOR = "pulse_ambient_light_color";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR = ANY_STRING_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5201,6 +5219,9 @@ public final class Settings {
             OMNI_ASPECT_RATIO_APPS_LIST,
             NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE,
             SHOW_LOCKSCREEN_MEDIA_ART,
+            USE_OLD_MOBILETYPE,
+            PULSE_AMBIENT_LIGHT,
+            PULSE_AMBIENT_LIGHT_COLOR,
         };
 
         /**
@@ -5377,6 +5398,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE);
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
             PRIVATE_SETTINGS.add(SHOW_LOCKSCREEN_MEDIA_ART);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_COLOR);
         }
 
         /**
@@ -5532,6 +5555,8 @@ public final class Settings {
             VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES, ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
             VALIDATORS.put(SHOW_LOCKSCREEN_MEDIA_ART, SHOW_LOCKSCREEN_MEDIA_ART_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT, PULSE_AMBIENT_LIGHT_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_COLOR, PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR);
         }
 
         /**

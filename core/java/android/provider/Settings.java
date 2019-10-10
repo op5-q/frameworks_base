@@ -5199,6 +5199,44 @@ public final class Settings {
          */
         public static final String GLOBAL_ACTIONS_POWER = "global_actions_power";
 
+         /**
+         * Whether to enable PULSE Edge lights
+         * @hide
+         */
+        public static final String OMNI_PULSE_AMBIENT_LIGHT = "pulse_ambient_light";
+
+        private static final Validator OMNI_PULSE_AMBIENT_LIGHT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+         /**
+         * Whether to enable Ambient Edge lights
+         * @hide
+         */
+
+        public static final String OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED = "ambient_notification_light_enabled";
+
+        private static final Validator OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+         /**
+         * Whether to enable Ambient Edge lights
+         * @hide
+         */
+
+        public static final String OMNI_AMBIENT_NOTIFICATION_LIGHT = "ambient_notification_light";
+
+        private static final Validator OMNI_AMBIENT_NOTIFICATION_LIGHT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+         /**
+         * Whether Ambient Edge lights are activated
+         * @hide
+         */
+
+        public static final String OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED = "ambient_notification_light_activated";
+
+        private static final Validator OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Whether to display reboot in the power menu
          *
@@ -5374,6 +5412,10 @@ public final class Settings {
             STATUSBAR_CLOCK_DATE_STYLE,
             STATUSBAR_CLOCK_DATE_FORMAT,
             GESTURE_PILL_TOGGLE,
+            OMNI_PULSE_AMBIENT_LIGHT,
+            OMNI_AMBIENT_NOTIFICATION_LIGHT,
+            OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED,
+            OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED,
         };
 
         /**
@@ -5545,6 +5587,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_STYLE);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
             PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
+            PRIVATE_SETTINGS.add(OMNI_PULSE_AMBIENT_LIGHT);
+            PRIVATE_SETTINGS.add(OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED);
         }
 
         /**
@@ -5695,6 +5739,10 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR);
             VALIDATORS.put(GESTURE_PILL_TOGGLE, GESTURE_PILL_TOGGLE_VALIDATOR);
+            VALIDATORS.put(OMNI_PULSE_AMBIENT_LIGHT, OMNI_PULSE_AMBIENT_LIGHT_VALIDATOR);
+            VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT, OMNI_AMBIENT_NOTIFICATION_LIGHT_VALIDATOR);
+            VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED, OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED_VALIDATOR);
+            VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED, OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED_VALIDATOR);
         }
 
         /**

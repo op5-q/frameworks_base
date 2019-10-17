@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2018 Potato Open Sauce Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-syntax = "proto2";
-option java_multiple_files = true;
+package com.android.internal.util;
 
-import "frameworks/base/core/proto/android/privacy.proto";
+public class DogbinException extends Exception {
 
-package android.content;
+    private static final long serialVersionUID = 666L;
 
-message LocaleProto {
-    option deprecated = true;
-    option (.android.msg_privacy).dest = DEST_AUTOMATIC;
-
-    optional string language = 1;
-    optional string country = 2;
-    optional string variant = 3;
-    optional string script = 4;
+	public DogbinException(String message) {
+        super(message);
+    }
 }
-

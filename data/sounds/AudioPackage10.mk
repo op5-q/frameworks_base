@@ -67,4 +67,8 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/ringtones/ogg/Sceptrum.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Sceptrum.ogg \
 	$(LOCAL_PATH)/ringtones/ogg/Solarium.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Solarium.ogg \
 	$(LOCAL_PATH)/ringtones/ogg/Themos.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Themos.ogg \
-	$(LOCAL_PATH)/ringtones/ogg/Zeta.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Zeta.ogg
+	$(LOCAL_PATH)/ringtones/ogg/Zeta.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Zeta.ogg \
+	$(LOCAL_PATH)/effects/material/ogg/VideoRecord_48k.ogg:system/media/audio/ui/VideoRecord.ogg \
+	$(LOCAL_PATH)/effects/material/ogg/VideoStop_48k.ogg:system/media/audio/ui/VideoStop.ogg \
+	$(LOCAL_PATH)/effects/material/ogg/camera_click_48k.ogg:system/media/audio/ui/camera_click.ogg \
+	$(LOCAL_PATH)/effects/ogg/camera_focus.ogg:system/media/audio/ui/camera_focus.ogg \

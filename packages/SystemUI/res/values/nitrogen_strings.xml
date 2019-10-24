@@ -129,6 +129,7 @@
     <string name="global_action_settings">Settings</string>
     <string name="global_action_screenrecord">Screenrecord</string>
     <string name="global_action_flashlight">Flashlight</string>
+    <string name="global_action_restart_sysui">SystemUI</string>
     
     <string name="tuner_battery_percent_disable">Don\'t show percentage</string>
     <string name="tuner_battery_percent_enable">Always show percentage</string>

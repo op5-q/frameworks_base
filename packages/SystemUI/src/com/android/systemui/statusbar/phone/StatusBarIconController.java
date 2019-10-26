@@ -312,10 +312,9 @@ public interface StatusBarIconController {
             StatusBarMobileView view = StatusBarMobileView.fromContext(mContext, slot);
             return view;
         }
-
         private NetworkTraffic onCreateNetworkTraffic(String slot) {
             NetworkTraffic view = new NetworkTraffic(mContext);
-            view.setPadding(4, 0, 4, 0);
+            view.setPadding(0, 0, 2, 0);
             return view;
         }
 

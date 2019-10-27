@@ -67,6 +67,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private int txtSize;
     private int txtImgPadding;
     private boolean mHideArrow;
+    private boolean mIsOnStatusBar;
     private int mAutoHideThreshold;
     private int mTintColor;
     private int mVisibleState = -1;
@@ -102,7 +103,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
             if (shouldHide(rxData, txData, timeDelta)) {
                 setText("");
                 mTrafficVisible = false;
-            } else {
+            } else if (!mIsOnStatusBar) {
                 // Get information for uplink ready so the line return can be added
                 String output = formatOutput(timeDelta, txData, symbol) + (mHideArrow ? "" : "\u25b2");
                 // Ensure text size is where it needs to be
@@ -170,6 +171,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_HIDEARROW), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_LOCATION), false,
                     this, UserHandle.USER_ALL);
         }
 
@@ -287,6 +291,9 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
                 UserHandle.USER_CURRENT);
         mHideArrow = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_HIDEARROW, 0,
+                UserHandle.USER_CURRENT) == 1;
+        mIsOnStatusBar = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
 

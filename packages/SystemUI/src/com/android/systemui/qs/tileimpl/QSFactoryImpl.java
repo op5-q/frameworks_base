@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ThemeTile;
+import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
@@ -94,7 +95,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<UsbTetherTile> mUsbTetherTileProvider;
     private final Provider<AlwaysOnDisplayTile> mAlwaysOnDisplayTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
-
+    private final Provider<ScreenRecordTile> mScreeenRecordTileProvider;
     private QSTileHost mHost;
 
     @Inject
@@ -125,7 +126,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<HWKeysTile> hWKeysTileProvider,
             Provider<UsbTetherTile> usbTetherTileProvider,
             Provider<AlwaysOnDisplayTile> alwaysOnDisplayTileProvider,
-            Provider<DataSwitchTile> dataSwitchTileProvider) {
+            Provider<DataSwitchTile> dataSwitchTileProvider,
+            Provider<ScreenRecordTile> screenRecordTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -154,6 +156,7 @@ public class QSFactoryImpl implements QSFactory {
         mUsbTetherTileProvider = usbTetherTileProvider;
         mAlwaysOnDisplayTileProvider = alwaysOnDisplayTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
+        mScreeenRecordTileProvider = screenRecordTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -227,6 +230,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mAlwaysOnDisplayTileProvider.get();
             case "dataswitch":
                 return mDataSwitchTileProvider.get();
+            case "screenrecord":
+                return mScreeenRecordTileProvider.get();
         }
 
         // Intent tiles.

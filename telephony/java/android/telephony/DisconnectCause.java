@@ -729,12 +729,6 @@ public final class DisconnectCause {
             return "HO_NOT_FEASIBLE";
         case NON_SELECTED_USER_CLEARING:
             return "NON_SELECTED_USER_CLEARING";
-        case MEDIA_TIMEOUT:
-            return "MEDIA_TIMEOUT";
-        case EMERGENCY_CALL_OVER_WFC_NOT_AVAILABLE:
-            return "EMERGENCY_CALL_OVER_WFC_NOT_AVAILABLE";
-        case WFC_SERVICE_NOT_AVAILABLE_IN_THIS_LOCATION:
-            return "WFC_SERVICE_NOT_AVAILABLE_IN_THIS_LOCATION";
         default:
             return "INVALID: " + cause;
         }

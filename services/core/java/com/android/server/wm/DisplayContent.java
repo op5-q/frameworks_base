@@ -67,7 +67,6 @@ import static android.view.WindowManager.LayoutParams.TYPE_DRAWN_APPLICATION;
 import static android.view.WindowManager.LayoutParams.TYPE_DREAM;
 import static android.view.WindowManager.LayoutParams.TYPE_INPUT_METHOD;
 import static android.view.WindowManager.LayoutParams.TYPE_INPUT_METHOD_DIALOG;
-import static android.view.WindowManager.LayoutParams.TYPE_NAVIGATION_BAR;
 import static android.view.WindowManager.LayoutParams.TYPE_STATUS_BAR;
 import static android.view.WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG;
 import static android.view.WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
@@ -138,8 +137,6 @@ import static com.android.server.wm.WindowManagerService.WINDOWS_FREEZING_SCREEN
 import static com.android.server.wm.WindowManagerService.WINDOW_FREEZE_TIMEOUT_DURATION;
 import static com.android.server.wm.WindowManagerService.dipToPixel;
 import static com.android.server.wm.WindowManagerService.logSurface;
-import static com.android.server.wm.WindowState.EXCLUSION_LEFT;
-import static com.android.server.wm.WindowState.EXCLUSION_RIGHT;
 import static com.android.server.wm.WindowState.RESIZE_HANDLE_WIDTH_IN_DP;
 import static com.android.server.wm.WindowStateAnimator.DRAW_PENDING;
 import static com.android.server.wm.WindowStateAnimator.READY_TO_SHOW;
@@ -333,8 +330,6 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
     private final RemoteCallbackList<ISystemGestureExclusionListener>
             mSystemGestureExclusionListeners = new RemoteCallbackList<>();
     private final Region mSystemGestureExclusion = new Region();
-    private boolean mSystemGestureExclusionWasRestricted = false;
-    private final Region mSystemGestureExclusionUnrestricted = new Region();
     private int mSystemGestureExclusionLimit;
 
     /**
@@ -5144,21 +5139,16 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
             return false;
         }
 
-        final Region systemGestureExclusion = Region.obtain();
-        mSystemGestureExclusionWasRestricted = calculateSystemGestureExclusion(
-                systemGestureExclusion, mSystemGestureExclusionUnrestricted);
+        final Region systemGestureExclusion = calculateSystemGestureExclusion();
         try {
             if (mSystemGestureExclusion.equals(systemGestureExclusion)) {
                 return false;
             }
             mSystemGestureExclusion.set(systemGestureExclusion);
-            final Region unrestrictedOrNull = mSystemGestureExclusionWasRestricted
-                    ? mSystemGestureExclusionUnrestricted : null;
             for (int i = mSystemGestureExclusionListeners.beginBroadcast() - 1; i >= 0; --i) {
                 try {
                     mSystemGestureExclusionListeners.getBroadcastItem(i)
-                            .onSystemGestureExclusionChanged(mDisplayId, systemGestureExclusion,
-                                    unrestrictedOrNull);
+                            .onSystemGestureExclusionChanged(mDisplayId, systemGestureExclusion);
                 } catch (RemoteException e) {
                     Slog.e(TAG, "Failed to notify SystemGestureExclusionListener", e);
                 }
@@ -5170,22 +5160,8 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
         }
     }
 
-    /**
-     * Calculates the system gesture exclusion.
-     *
-     * @param outExclusion will be set to the gesture exclusion region
-     * @param outExclusionUnrestricted will be set to the gesture exclusion region without
-     *                                 any restrictions applied.
-     * @return whether any restrictions were applied, i.e. outExclusion and outExclusionUnrestricted
-     *         differ.
-     */
     @VisibleForTesting
-    boolean calculateSystemGestureExclusion(Region outExclusion, @Nullable
-            Region outExclusionUnrestricted) {
-        outExclusion.setEmpty();
-        if (outExclusionUnrestricted != null) {
-            outExclusionUnrestricted.setEmpty();
-        }
+    Region calculateSystemGestureExclusion() {
         final Region unhandled = Region.obtain();
         unhandled.set(0, 0, mDisplayFrames.mDisplayWidth, mDisplayFrames.mDisplayHeight);
 
@@ -5194,6 +5170,7 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
         final Rect rightEdge = mInsetsStateController.getSourceProvider(TYPE_RIGHT_GESTURES)
                 .getSource().getFrame();
 
+        final Region global = Region.obtain();
         final Region touchableRegion = Region.obtain();
         final Region local = Region.obtain();
         final int[] remainingLeftRight =
@@ -5231,39 +5208,28 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
             if (needsGestureExclusionRestrictions(w, mLastDispatchedSystemUiVisibility)) {
 
                 // Processes the region along the left edge.
-                remainingLeftRight[0] = addToGlobalAndConsumeLimit(local, outExclusion, leftEdge,
-                        remainingLeftRight[0], w, EXCLUSION_LEFT);
+                remainingLeftRight[0] = addToGlobalAndConsumeLimit(local, global, leftEdge,
+                        remainingLeftRight[0]);
 
                 // Processes the region along the right edge.
-                remainingLeftRight[1] = addToGlobalAndConsumeLimit(local, outExclusion, rightEdge,
-                        remainingLeftRight[1], w, EXCLUSION_RIGHT);
+                remainingLeftRight[1] = addToGlobalAndConsumeLimit(local, global, rightEdge,
+                        remainingLeftRight[1]);
 
                 // Adds the middle (unrestricted area)
                 final Region middle = Region.obtain(local);
                 middle.op(leftEdge, Op.DIFFERENCE);
                 middle.op(rightEdge, Op.DIFFERENCE);
-                outExclusion.op(middle, Op.UNION);
+                global.op(middle, Op.UNION);
                 middle.recycle();
             } else {
-                boolean loggable = needsGestureExclusionRestrictions(w, 0 /* lastSysUiVis */);
-                if (loggable) {
-                    addToGlobalAndConsumeLimit(local, outExclusion, leftEdge,
-                            Integer.MAX_VALUE, w, EXCLUSION_LEFT);
-                    addToGlobalAndConsumeLimit(local, outExclusion, rightEdge,
-                            Integer.MAX_VALUE, w, EXCLUSION_RIGHT);
-                }
-                outExclusion.op(local, Op.UNION);
-            }
-            if (outExclusionUnrestricted != null) {
-                outExclusionUnrestricted.op(local, Op.UNION);
+                global.op(local, Op.UNION);
             }
             unhandled.op(touchableRegion, Op.DIFFERENCE);
         }, true /* topToBottom */);
         local.recycle();
         touchableRegion.recycle();
         unhandled.recycle();
-        return remainingLeftRight[0] < mSystemGestureExclusionLimit
-                || remainingLeftRight[1] < mSystemGestureExclusionLimit;
+        return global;
     }
 
     /**
@@ -5281,57 +5247,31 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
     }
 
     /**
-     * @return Whether gesture exclusion area should be logged for the given window
-     */
-    static boolean logsGestureExclusionRestrictions(WindowState win) {
-        if (win.mWmService.mSystemGestureExclusionLogDebounceTimeoutMillis <= 0) {
-            return false;
-        }
-        final WindowManager.LayoutParams attrs = win.getAttrs();
-        final int type = attrs.type;
-        return type != TYPE_WALLPAPER
-                && type != TYPE_APPLICATION_STARTING
-                && type != TYPE_NAVIGATION_BAR
-                && (attrs.flags & FLAG_NOT_TOUCHABLE) == 0
-                && needsGestureExclusionRestrictions(win, 0 /* sysUiVisibility */)
-                && win.getDisplayContent().mDisplayPolicy.hasSideGestures();
-    }
-
-    /**
      * Adds a local gesture exclusion area to the global area while applying a limit per edge.
      *
      * @param local The gesture exclusion area to add.
      * @param global The destination.
      * @param edge Only processes the part in that region.
      * @param limit How much limit in pixels we have.
-     * @param win The WindowState that is being processed
-     * @param side The side that is being processed, either {@link WindowState#EXCLUSION_LEFT} or
-     *             {@link WindowState#EXCLUSION_RIGHT}
-     * @return How much of the limit is remaining.
+     * @return How much of the limit are remaining.
      */
     private static int addToGlobalAndConsumeLimit(Region local, Region global, Rect edge,
-            int limit, WindowState win, int side) {
+            int limit) {
         final Region r = Region.obtain(local);
         r.op(edge, Op.INTERSECT);
 
         final int[] remaining = {limit};
-        final int[] requestedExclusion = {0};
         forEachRectReverse(r, rect -> {
             if (remaining[0] <= 0) {
                 return;
             }
             final int height = rect.height();
-            requestedExclusion[0] += height;
             if (height > remaining[0]) {
                 rect.top = rect.bottom - remaining[0];
             }
             remaining[0] -= height;
             global.op(rect, Op.UNION);
         });
-
-        final int grantedExclusion = limit - remaining[0];
-        win.setLastExclusionHeights(side, requestedExclusion[0], grantedExclusion);
-
         r.recycle();
         return remaining[0];
     }
@@ -5346,13 +5286,10 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
         }
 
         if (!changed) {
-            final Region unrestrictedOrNull = mSystemGestureExclusionWasRestricted
-                    ? mSystemGestureExclusionUnrestricted : null;
             // If updateSystemGestureExclusion changed the exclusion, it will already have
             // notified the listener. Otherwise, we'll do it here.
             try {
-                listener.onSystemGestureExclusionChanged(mDisplayId, mSystemGestureExclusion,
-                        unrestrictedOrNull);
+                listener.onSystemGestureExclusionChanged(mDisplayId, mSystemGestureExclusion);
             } catch (RemoteException e) {
                 Slog.e(TAG, "Failed to notify SystemGestureExclusionListener during register", e);
             }

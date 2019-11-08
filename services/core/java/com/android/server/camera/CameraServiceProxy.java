@@ -103,10 +103,6 @@ public class CameraServiceProxy extends SystemService
     private static final String NFC_SERVICE_BINDER_NAME = "nfc";
     private static final IBinder nfcInterfaceToken = new Binder();
 
-
-    private final boolean mNotifyNfc;
-    private final boolean mAllowMediaUid;
-
     // Valid values for NFC_NOTIFICATION_PROP
     // Do not disable active NFC for any camera use
     private static final int NFC_NOTIFY_NONE = 0;
@@ -127,6 +123,7 @@ public class CameraServiceProxy extends SystemService
 
     private final @NfcNotifyState int mNotifyNfc;
     private boolean mLastNfcPollState = true;
+    private final boolean mAllowMediaUid;
 
     /**
      * Structure to track camera usage
@@ -236,6 +233,8 @@ public class CameraServiceProxy extends SystemService
         }
         mNotifyNfc = notifyNfc;
         if (DEBUG) Slog.v(TAG, "Notify NFC state is " + nfcNotifyToString(mNotifyNfc));
+	mAllowMediaUid = mContext.getResources().getBoolean(
+        com.android.internal.R.bool.config_allowMediaUidForCameraServiceProxy);
     }
 
     @Override

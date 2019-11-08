@@ -34,11 +34,9 @@ public abstract class SystemGestureExclusionListenerCompat {
             new ISystemGestureExclusionListener.Stub() {
                 @Override
                 public void onSystemGestureExclusionChanged(int displayId,
-                        Region systemGestureExclusion, Region unrestrictedOrNull) {
+                        Region systemGestureExclusion) {
                     if (displayId == mDisplayId) {
-                        Region unrestricted = (unrestrictedOrNull == null)
-                                ? systemGestureExclusion : unrestrictedOrNull;
-                        onExclusionChanged(systemGestureExclusion, unrestricted);
+                        onExclusionChanged(systemGestureExclusion);
                     }
                 }
             };
@@ -49,27 +47,9 @@ public abstract class SystemGestureExclusionListenerCompat {
     }
 
     /**
-     * Called when the exclusion region has changed.
-     *
-     * TODO: remove, once all subclasses have migrated to
-     *       {@link #onExclusionChanged(Region, Region)}.
+     * Called when the exclusion region has changed
      */
     public abstract void onExclusionChanged(Region systemGestureExclusion);
-
-    /**
-     * Called when the exclusion region has changed.
-     *
-     * @param systemGestureExclusion the system gesture exclusion to be applied
-     * @param systemGestureExclusionUnrestricted what would be the system gesture exclusion, if
-     *           there were no restrictions being applied. For logging purposes only.
-     *
-     */
-    public void onExclusionChanged(Region systemGestureExclusion,
-            Region systemGestureExclusionUnrestricted) {
-        // TODO: make abstract, once all subclasses have migrated away from
-        //       onExclusionChanged(Region)
-        onExclusionChanged(systemGestureExclusion);
-    }
 
     /**
      * Registers the listener for getting exclusion rect changes.

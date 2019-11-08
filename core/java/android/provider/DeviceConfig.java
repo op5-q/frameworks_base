@@ -352,12 +352,13 @@ public final class DeviceConfig {
          * Events that happen in-between will be silently dropped.
          *
          * A non-positive value disables logging.
+         * Key for controlling which packages are explicitly blocked from running at refresh rates
+         * higher than 60hz.
          *
          * @see android.provider.DeviceConfig#NAMESPACE_WINDOW_MANAGER
          * @hide
          */
-        String KEY_SYSTEM_GESTURE_EXCLUSION_LOG_DEBOUNCE_MILLIS =
-                "system_gesture_exclusion_log_debounce_millis";
+        String KEY_HIGH_REFRESH_RATE_BLACKLIST = "high_refresh_rate_blacklist";
     }
 
     private static final Object sLock = new Object();

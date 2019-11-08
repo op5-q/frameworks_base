@@ -28,14 +28,7 @@ oneway interface ISystemGestureExclusionListener {
      * Called when the system gesture exclusion for the given display changed.
      * @param displayId the display whose system gesture exclusion changed
      * @param systemGestureExclusion a {@code Region} where the app would like priority over the
-     *                               system gestures, in display coordinates. Certain restrictions
-     *                               might be applied such that apps don't get all the exclusions
-     *                               they request.
-     * @param systemGestureExclusionUnrestricted a {@code Region} where the app would like priority
-     *                               over the system gestures, in display coordinates, without
-     *                               any restrictions applied. Null if no restrictions have been
-     *                               applied.
+     *                               system gestures, in display coordinates.
      */
-    void onSystemGestureExclusionChanged(int displayId, in Region systemGestureExclusion,
-            in Region systemGestureExclusionUnrestricted);
+    void onSystemGestureExclusionChanged(int displayId, in Region systemGestureExclusion);
 }

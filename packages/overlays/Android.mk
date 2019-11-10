@@ -47,6 +47,7 @@ LOCAL_REQUIRED_MODULES := \
 	FontCagliostroSourceOverlay \
 	FontCoolstorySourceOverlay \
 	FontLGSmartGothicSourceOverlay \
+	FontGoogleSansOverlay \
 	FontNotoSerifSourceOverlay \
 	FontRosemarySourceOverlay \
 	FontSonySketchSourceOverlay \

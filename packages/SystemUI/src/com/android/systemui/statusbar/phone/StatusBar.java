@@ -2763,7 +2763,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (mRemoteInputManager.getController() != null) {
                     mRemoteInputManager.getController().closeRemoteInputs();
                 }
-                if (mBubbleController.isStackExpanded()) {
+                if (mBubbleController != null && mBubbleController.isStackExpanded()) {
                     mBubbleController.collapseStack();
                 }
                 if (mLockscreenUserManager.isCurrentProfile(getSendingUserId())) {
@@ -2779,7 +2779,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (mStatusBarWindowController != null) {
                     mStatusBarWindowController.setNotTouchable(false);
                 }
-                if (mBubbleController.isStackExpanded()) {
+                if (mBubbleController != null && mBubbleController.isStackExpanded()) {
                     mBubbleController.collapseStack();
                 }
                 finishBarAnimations();
@@ -3538,7 +3538,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mNotificationPanel.canPanelBeCollapsed()) {
                 animateCollapsePanels();
             } else {
-                mBubbleController.performBackPressIfNeeded();
+                if (mBubbleController != null) {
+                    mBubbleController.performBackPressIfNeeded();
+                }
             }
             return true;
         }

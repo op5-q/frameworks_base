@@ -225,4 +225,14 @@ public class NitrogenUtils {
         int mode = mUiModeManager.getNightMode();
         return (mode == UiModeManager.MODE_NIGHT_YES);
     }
+
+    public static void setPartialScreenshot(boolean active) {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.setPartialScreenshot(active);
+            } catch (RemoteException e) {}
+        }
+    }
+
 }

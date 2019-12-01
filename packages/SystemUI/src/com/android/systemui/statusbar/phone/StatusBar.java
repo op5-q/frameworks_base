@@ -1861,6 +1861,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mPresenter;
     }
 
+    @Override
+    public void setPartialScreenshot(boolean active) {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().setPartialScreenshot(active);
+        }
+        mNotificationInterruptionStateProvider.setPartialScreenshot(active);
+    }
+
     private void setPulseOnNewTracks() {
         if (mSliceProvider != null) {
             mSliceProvider.setPulseOnNewTracks(Settings.System.getIntForUser(mContext.getContentResolver(),

@@ -93,7 +93,8 @@ public class PhoneStatusBarPolicy
     private static final String TAG = "PhoneStatusBarPolicy";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
-    public static final int LOCATION_STATUS_ICON_ID = PrivacyType.TYPE_LOCATION.getIconId();
+    public static final int LOCATION_STATUS_ICON_ID =
+            R.drawable.stat_sys_location;
 
     private final String mSlotCast;
     private final String mSlotHotspot;
@@ -106,9 +107,9 @@ public class PhoneStatusBarPolicy
     private final String mSlotRotate;
     private final String mSlotHeadset;
     private final String mSlotDataSaver;
-    private final String mSlotLocation;
     private final String mSlotMicrophone;
     private final String mSlotCamera;
+    private final String mSlotLocation = "location";
     private final String mSlotSensorsOff;
     private final String mSlotNfc;
 

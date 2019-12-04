@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import com.android.systemui.Dependency;
 import com.android.systemui.SystemUIFactory;
 import com.android.systemui.fragments.FragmentService;
+import com.android.systemui.SystemUIFactory;
 
 import javax.inject.Inject;
 

@@ -23,12 +23,12 @@ import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.util.InjectionInflationController;
 import com.android.systemui.util.leak.GarbageMonitor;
 
-import com.google.android.systemui.SystemUIGoogleModule;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
+
+import com.google.android.systemui.SystemUIGoogleModule;
 
 /**
  * Root component for Dagger injection.
@@ -39,8 +39,8 @@ import dagger.Component;
         DependencyBinder.class,
         ServiceBinder.class,
         SystemUIFactory.ContextHolder.class,
-        SystemUIGoogleModule.class,
         SystemUIModule.class,
+        SystemUIGoogleModule.class,
         SystemUIDefaultModule.class})
 public interface SystemUIRootComponent {
     /**

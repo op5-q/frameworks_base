@@ -35,6 +35,10 @@
         android:title="@string/quick_settings_cast_title" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:key="location"
+        android:title="@string/status_bar_location" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:key="ethernet"
         android:title="@string/status_bar_ethernet" />
 
@@ -91,13 +95,19 @@
         android:key="zen"
         android:title="@string/quick_settings_dnd_label" />
 
-    <com.android.systemui.tuner.ClockPreference
-        android:title="@string/tuner_time"
-        android:summary="%s"
-        android:entries="@array/clock_options" />
+     <com.android.systemui.tuner.BatteryPreference
+         android:title="@string/tuner_battery_percent_title"
+         android:summary="%s"
+         android:entries="@array/battery_options_new" />
 
-    <com.android.systemui.tuner.BatteryPreference
-        android:title="@string/battery"
-        android:summary="%s"
-        android:entries="@array/battery_options" />
+     <com.android.systemui.tuner.TunerSwitch
+         android:key="status_bar_show_battery_image"
+         android:title="@string/tuner_status_bar_show_battery_image"
+         sysui:defValue="true" />
+
+     <com.android.systemui.tuner.ClockPreference
+         android:title="@string/tuner_time"
+         android:summary="%s"
+         android:entries="@array/clock_options" />
+
 </PreferenceScreen>

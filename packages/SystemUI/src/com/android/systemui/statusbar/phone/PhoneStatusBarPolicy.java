@@ -109,7 +109,7 @@ public class PhoneStatusBarPolicy
     private final String mSlotDataSaver;
     private final String mSlotMicrophone;
     private final String mSlotCamera;
-    private final String mSlotLocation = "location";
+    private  String mSlotLocation = "location";
     private final String mSlotSensorsOff;
     private final String mSlotNfc;
 

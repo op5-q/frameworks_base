@@ -3957,13 +3957,18 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.HIDE_BACK_ARROW_GESTURE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.System.EDGE_GESTURE_Y_DEAD_ZONE),
+                    false, this, UserHandle.USER_ALL);
         }
          @Override
         public void onChange(boolean selfChange, Uri uri) {
  		if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.HIDE_BACK_ARROW_GESTURE))) {
                 setHideArrowForBackGesture();
-            	}
+              } else if (uri.equals(Settings.System.getUriFor(Settings.System.EDGE_GESTURE_Y_DEAD_ZONE))) {
+                setEdgeGestureDeadZone();
+              }
             	update();
         }
          public void update() {
@@ -3972,6 +3977,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setStatusDoubleTapToSleep();
             setLockScreenMediaArt();
             setHideArrowForBackGesture();
+            setEdgeGestureDeadZone();
         }
     }
 
@@ -3997,9 +4003,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
- private void setHideArrowForBackGesture() {
+    private void setHideArrowForBackGesture() {
         if (getNavigationBarView() != null) {
             getNavigationBarView().updateBackArrowForGesture();
+        }
+    }
+    private void setEdgeGestureDeadZone() {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().setEdgeGestureDeadZone();
         }
     }
 

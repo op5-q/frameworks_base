@@ -5089,6 +5089,15 @@ public final class Settings {
         public static final Validator STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
 
+        /**
+         * Duration of Ambient edge light in seconds
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT_DURATION = "pulse_ambient_light_duration";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Stores the java DateFormat string for the date
@@ -5441,6 +5450,8 @@ public final class Settings {
             OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED,
             OMNI_AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD,
             PULSE_AMBIENT_LIGHT_COLOR,
+            PULSE_AMBIENT_AUTO_COLOR,
+            PULSE_AMBIENT_LIGHT_DURATION,
         };
 
         /**
@@ -5615,6 +5626,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_PULSE_AMBIENT_LIGHT);
             PRIVATE_SETTINGS.add(OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_COLOR);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_AUTO_COLOR);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_DURATION);
         }
 
         /**
@@ -5771,6 +5784,8 @@ public final class Settings {
             VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED, OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD, OMNI_AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_COLOR, PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_AUTO_COLOR, PULSE_AMBIENT_AUTO_COLOR_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_DURATION, PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR);
         }
 
         /**

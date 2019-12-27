@@ -5238,7 +5238,6 @@ public final class Settings {
             OMNI_ASPECT_RATIO_APPS_LIST,
             NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE,
             SHOW_LOCKSCREEN_MEDIA_ART,
-            USE_OLD_MOBILETYPE,
             PULSE_AMBIENT_LIGHT,
             PULSE_AMBIENT_LIGHT_COLOR,
             PULSE_AMBIENT_AUTO_COLOR,

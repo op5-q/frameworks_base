@@ -24,19 +24,6 @@ LOCAL_REQUIRED_MODULES := \
 	AccentColorSpaceOverlay \
 	AccentColorGreenOverlay \
 	AccentColorPurpleOverlay \
-        AccentColorCocaColaOverlay \
-	AccentColorDiscordOverlay \
-	AccentColorGoldenShowerOverlay \
-	AccentColorJollibeeOverlay \
-        AccentColorNextbitOverlay \
-	AccentColorOnePlusOverlay \
-	AccentColorParanoidOverlay \
-	AccentColorPepsiOverlay \
-        AccentColorRazerOverlay \
-        AccentColorStarbucksOverlay \
-	AccentColorXboxOverlay \
-	AccentColorXiaomiOverlay \
-	AccentColorPixelOverlay \
 	DisplayCutoutEmulationCornerOverlay \
 	DisplayCutoutEmulationDoubleOverlay \
 	DisplayCutoutEmulationTallOverlay \

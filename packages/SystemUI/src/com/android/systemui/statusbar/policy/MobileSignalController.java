@@ -104,6 +104,7 @@ public class MobileSignalController extends SignalController<
     private ImsManager mImsManager;
     private ImsManager.Connector mImsManagerConnector;
     private boolean mVolteIcon;
+    private boolean mlteplusicon;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -126,6 +127,7 @@ public class MobileSignalController extends SignalController<
                 com.android.internal.R.string.lockscreen_carrier_default).toString();
 
         Dependency.get(TunerService.class).addTunable(this, "volte");
+        Dependency.get(TunerService.class).addTunable(this, "lteplus");
         mapIconSets();
 
         String networkName = info.getCarrierName() != null ? info.getCarrierName().toString()
@@ -176,6 +178,10 @@ public class MobileSignalController extends SignalController<
         switch (key) {
             case "volte":
                      mVolteIcon =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                        notifyListenersIfNecessary();
+	    case "lteplus":
+                     mlteplusicon =
                         TunerService.parseIntegerSwitch(newValue, true);
                         notifyListenersIfNecessary();
             default:
@@ -346,7 +352,7 @@ public class MobileSignalController extends SignalController<
             }
         } else {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.LTE);
-            if (mConfig.hideLtePlus) {
+            if (mConfig.hideLtePlus && !mlteplusicon) {
                 mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
                         TelephonyIcons.LTE);
             } else {

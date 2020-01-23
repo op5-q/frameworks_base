@@ -214,4 +214,7 @@
     <string name="accessibility_quick_settings_always_on_display_changed_off">Always on display turned off.</string>
     <string name="accessibility_quick_settings_always_on_display_changed_on">Always on display turned on.</string>
 
+    <!-- Name of the LTE plus status bar icon. -->
+    <string name="status_bar_lteplus">LTE+</string>
+
 </resources>

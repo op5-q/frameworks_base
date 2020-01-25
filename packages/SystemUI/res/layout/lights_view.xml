@@ -27,6 +27,7 @@
         android:layout_gravity="right"
         android:id="@+id/notification_animation_right"
         android:layout_width="150px"
+        android:padding="-2dp"
         android:layout_height="match_parent"
         android:src="@drawable/aod_notification_light_right"/>
      <ImageView
@@ -35,6 +36,7 @@
         android:layout_gravity="left"
         android:id="@+id/notification_animation_left"
         android:layout_width="150px"
+        android:padding="-2dp"
         android:layout_height="match_parent"
         android:src="@drawable/aod_notification_light_left"/>
 

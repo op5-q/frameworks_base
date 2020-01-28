@@ -5245,8 +5245,14 @@ public final class Settings {
         public static final String GLOBAL_ACTIONS_RESTART = "global_actions_restart";
 
         /**
+        * helper setting to contain the current pulse reason so we can check
+        * if it has been triggered from a notification or a gesture
+        * @hide
+        */
+       public static final String OMNI_PULSE_TRIGGER_REASON = "pulse_trigger_reason";
+
+        /**
          * Whether to display sound panel in the power menu
-         *
          * @hide
          */
         public static final String GLOBAL_ACTIONS_SOUNDPANEL = "global_actions_soundpanel";

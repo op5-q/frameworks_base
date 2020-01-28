@@ -52,6 +52,8 @@ public class NitrogenUtils {
     public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";
     private static OverlayManager mOverlayService;
 
+    private static IStatusBarService mStatusBarService = null;
+
 
     public static void switchScreenOff(Context ctx) {
         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
@@ -232,6 +234,16 @@ public class NitrogenUtils {
             try {
                 service.setPartialScreenshot(active);
             } catch (RemoteException e) {}
+        }
+    }
+
+    private static IStatusBarService getStatusBarService() {
+        synchronized (ActionUtils.class) {
+            if (mStatusBarService == null) {
+                mStatusBarService = IStatusBarService.Stub.asInterface(
+                        ServiceManager.getService("statusbar"));
+            }
+            return mStatusBarService;
         }
     }
 

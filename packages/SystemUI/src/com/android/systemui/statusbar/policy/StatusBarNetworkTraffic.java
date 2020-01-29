@@ -337,7 +337,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements StatusIco
                 Settings.System.NETWORK_TRAFFIC_STATE, 0,
                 UserHandle.USER_CURRENT) == 1;
         mAutoHideThreshold = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0,
+                Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 1,
                 UserHandle.USER_CURRENT);
         mHideArrow = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_HIDEARROW, 0,

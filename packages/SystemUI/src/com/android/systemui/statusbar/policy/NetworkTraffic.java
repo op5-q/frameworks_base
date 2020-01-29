@@ -93,6 +93,7 @@ public class NetworkTraffic extends TextView {
                 setText("");
                 mTrafficVisible = false;
             } else if (!mIsOnStatusBar) {
+/*
                 // Get information for uplink ready so the line return can be added
                 String output = "\0";
                 // Ensure text size is where it needs to be
@@ -107,6 +108,7 @@ public class NetworkTraffic extends TextView {
                     setText(output);
                 }
                 mTrafficVisible = true;
+*/
             }
             updateVisibility();
 

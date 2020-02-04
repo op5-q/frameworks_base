@@ -238,7 +238,7 @@ public class NitrogenUtils {
     }
 
     private static IStatusBarService getStatusBarService() {
-        synchronized (ActionUtils.class) {
+        synchronized (NitrogenUtils.class) {
             if (mStatusBarService == null) {
                 mStatusBarService = IStatusBarService.Stub.asInterface(
                         ServiceManager.getService("statusbar"));

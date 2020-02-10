@@ -1141,7 +1141,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         filter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(DevicePolicyManager.ACTION_SHOW_DEVICE_MONITORING_DIALOG);
-        filter.addAction(NitrogenUtils.ACTION_DISMISS_KEYGUARD);
+        filter.addAction(NotificationPanelView.CANCEL_NOTIFICATION_PULSE_ACTION);
         context.registerReceiverAsUser(mBroadcastReceiver, UserHandle.ALL, filter, null, null);
 
         IntentFilter demoFilter = new IntentFilter();
@@ -2856,6 +2856,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Intent launchIntent = (Intent) intent.getParcelableExtra(NitrogenUtils.DISMISS_KEYGUARD_EXTRA_INTENT);
                     startActivityDismissingKeyguard(launchIntent, true, true);
                 }
+            }
+            else if (NotificationPanelView.CANCEL_NOTIFICATION_PULSE_ACTION.equals(action)) {
+                mNotificationPanel.stopNotificationPulse();
             }
         }
     };

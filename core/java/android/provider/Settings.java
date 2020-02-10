@@ -5290,6 +5290,15 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Timeout for ambient pulse in seconds - 0 is no timeout
+         * @hide
+         */
+        public static final String OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT = "ambient_notification_light_timeout";
+
+        private static final Validator OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT_VALIDATOR =
+               ANY_INTEGER_VALIDATOR;
+
+        /**
          * Whether to display reboot in the power menu
          *
          * @hide
@@ -5506,6 +5515,7 @@ public final class Settings {
             PULSE_AMBIENT_LIGHT_PULSE_FOR_ALL,
             PULSE_BRIGHTNESS,
             DOZE_BRIGHTNESS,
+            OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT,
         };
 
         /**
@@ -5852,6 +5862,7 @@ public final class Settings {
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_PULSE_FOR_ALL, PULSE_AMBIENT_LIGHT_PULSE_FOR_ALL_VALIDATOR);
             VALIDATORS.put(PULSE_BRIGHTNESS, PULSE_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(DOZE_BRIGHTNESS, DOZE_BRIGHTNESS_VALIDATOR);
+            VALIDATORS.put(OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT, OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT_VALIDATOR);
         }
 
         /**

@@ -652,6 +652,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR),
                     false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver()..registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LONG_BACK_SWIPE_TIMEOUT),
+                    false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LEFT_LONG_BACK_SWIPE_ACTION),
+                    false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RIGHT_LONG_BACK_SWIPE_ACTION),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4052,8 +4061,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.Secure.HIDE_BACK_ARROW_GESTURE))) {
                 setHideArrowForBackGesture();
               } else if (uri.equals(Settings.System.getUriFor(Settings.System.EDGE_GESTURE_Y_DEAD_ZONE))) {
-                setEdgeGestureDeadZone();
+                setGestureNavOptions();
               }
+		else if (uri.equals(Settings.System.getUriFor(Settings.System.LONG_BACK_SWIPE_TIMEOUT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.LEFT_LONG_BACK_SWIPE_ACTION)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.RIGHT_LONG_BACK_SWIPE_ACTION))) {
+                setGestureNavOptions();
+		}
             	update();
         }
          public void update() {
@@ -4062,7 +4076,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setStatusDoubleTapToSleep();
             setLockScreenMediaArt();
             setHideArrowForBackGesture();
-            setEdgeGestureDeadZone();
+            setGestureNavOptions();
         }
     }
 
@@ -4093,9 +4107,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             getNavigationBarView().updateBackArrowForGesture();
         }
     }
-    private void setEdgeGestureDeadZone() {
+    private void setGestureNavOptions(){
         if (getNavigationBarView() != null) {
             getNavigationBarView().setEdgeGestureDeadZone();
+            getNavigationBarView().setLongSwipeOptions();
         }
     }
 

@@ -788,6 +788,10 @@ public class NavigationBarView extends FrameLayout implements
         mOverviewProxyService.setSystemUiStateFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
                 active ? true : mPanelView.isFullyExpanded() && !mPanelView.isInSettings(),
                 displayId);
+     }
+
+    public void setLongSwipeOptions() {
+        mEdgeBackGestureHandler.setLongSwipeOptions();
     }
 
     /**

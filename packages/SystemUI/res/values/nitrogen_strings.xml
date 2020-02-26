@@ -219,4 +219,9 @@
 
     <string name="delete_screenshot_toast">Screenshot deleted</string>
 
+    <string name="app_picker_dialog_title">Select an app</string>
+
+    <string name="app_picker_dialog_title">Select an app</string>
+
+
 </resources>

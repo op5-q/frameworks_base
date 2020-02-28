@@ -16,6 +16,7 @@
 
 package com.android.internal.util.nitrogen;
 
+import android.app.ActivityManager;
 import android.app.UiModeManager;
 import android.content.Context;
 import android.content.om.IOverlayManager;
@@ -104,6 +105,7 @@ public class NitrogenUtils {
         }
     }
 
+
     private static final class FireActions {
         private static IStatusBarService mStatusBarService = null;
         private static IStatusBarService getStatusBarService() {
@@ -156,6 +158,17 @@ public class NitrogenUtils {
        } catch (NameNotFoundException e) {
            return false;
        }
+    }
+
+        // Clear notifications
+        public static void clearAllNotifications() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.onClearAllNotifications(ActivityManager.getCurrentUser());
+                } catch (RemoteException e) {}
+            }
+        }
     }
 
     /**

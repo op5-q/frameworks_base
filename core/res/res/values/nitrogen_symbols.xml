@@ -77,7 +77,7 @@
 
     <!-- Themes -->
     <java-symbol type="color" name="theme_generic_semi_transparent_color" />
-    <color name="du_themes_qs_inactive_color">#FFDCDCDC</color>
+    <java-symbol type="color" name="du_themes_qs_inactive_color" />
 
     <java-symbol type="drawable" name="stat_sys_data_usb_custom" />
 

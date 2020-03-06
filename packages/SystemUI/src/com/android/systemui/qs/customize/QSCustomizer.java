@@ -369,12 +369,12 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         int defaultColumns = Math.max(1, mContext.getResources().getInteger(R.integer.quick_settings_num_columns));
         // reset QS panel columns
         Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.QS_LAYOUT_COLUMNS, defaultColumns);
+                Settings.System.OMNI_QS_LAYOUT_COLUMNS, defaultColumns);
         Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns);
+                Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns);
         // reset QS tile title visibility
         Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.QS_TILE_TITLE_VISIBILITY, 1);
+                Settings.System.OMNI_QS_TILE_TITLE_VISIBILITY, 1);
     }
 
     private void setTileSpecs() {

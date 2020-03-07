@@ -46,6 +46,7 @@ import android.view.WindowManagerGlobal;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.media.AudioManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -95,8 +96,30 @@ public class NitrogenUtils {
         }
     }
 
+ // Screen on
+    public static void switchScreenOn(Context context) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (pm == null) return;
+        pm.wakeUp(SystemClock.uptimeMillis(), "com.android.systemui:CAMERA_GESTURE_PREVENT_LOCK");
+    }
+
+    // Volume panel
+    public static void toggleVolumePanel(Context context) {
+        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
+    }
+
     public static boolean deviceHasFlashlight(Context ctx) {
         return ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    }
+
+    public static void clearAllNotifications() {
+        FireActions.clearAllNotifications();
+    }
+
+    // Toggle notifications panel
+    public static void toggleNotifications() {
+        FireActions.toggleNotifications();
     }
 
     public static void toggleCameraFlash() {
@@ -137,7 +160,6 @@ public class NitrogenUtils {
         }
     }
 
-
     public static void toggleQsPanel() {
         FireActions.toggleQsPanel();
     }
@@ -164,7 +186,38 @@ public class NitrogenUtils {
                 }
             }
         }
-    }
+
+        public static void toggleNotifications() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.expandNotificationsPanel();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        // Clear notifications
+        public static void clearAllNotifications() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.onClearAllNotifications(ActivityManager.getCurrentUser());
+                } catch (RemoteException e) {}
+            }
+        }
+
+        // Toggle qs panel
+        public static void toggleQsPanel() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleSettingsPanel();
+                } catch (RemoteException e) {}
+            }
+        }
+   }
 
     public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
         if (pkg != null) {
@@ -194,27 +247,6 @@ public class NitrogenUtils {
        } catch (NameNotFoundException e) {
            return false;
        }
-    }
-
-        // Clear notifications
-        public static void clearAllNotifications() {
-            IStatusBarService service = getStatusBarService();
-            if (service != null) {
-                try {
-                    service.onClearAllNotifications(ActivityManager.getCurrentUser());
-                } catch (RemoteException e) {}
-            }
-        }
-
-        // Toggle qs panel
-        public static void toggleQsPanel() {
-            IStatusBarService service = getStatusBarService();
-            if (service != null) {
-                try {
-                    service.toggleSettingsPanel();
-                } catch (RemoteException e) {}
-            }
-        }
     }
 
     /**

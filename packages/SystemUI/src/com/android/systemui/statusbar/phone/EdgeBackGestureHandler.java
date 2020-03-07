@@ -64,7 +64,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
-import com.android.internal.util.pixeldust.PixeldustUtils;
+import com.android.internal.util.nitrogen.NitrogenUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.assist.AssistManager;
@@ -286,7 +286,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 // Get packageName from Uri
                 String packageName = intent.getData().getSchemeSpecificPart();
                 // If the package is still installed
-                if (PixeldustUtils.isPackageInstalled(context, packageName)) {
+                if (NitrogenUtils.isPackageInstalled(context, packageName)) {
                     // it's an application update, we can skip the rest.
                     return;
                 }
@@ -635,37 +635,37 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 mAssistManager.startAssist(new Bundle() /* args */);
                 break;
             case 2: // Voice search
-                PixeldustUtils.launchVoiceSearch(mContext);
+                NitrogenUtils.launchVoiceSearch(mContext);
                 break;
             case 3: // Camera
-                PixeldustUtils.launchCamera(mContext);
+                NitrogenUtils.launchCamera(mContext);
                 break;
             case 4: // Flashlight
-                PixeldustUtils.toggleCameraFlash();
+                NitrogenUtils.toggleCameraFlash();
                 break;
             case 5: // Application
                 launchApp(mContext, isLeftPanel);
                 break;
             case 6: // Volume panel
-                PixeldustUtils.toggleVolumePanel(mContext);
+                NitrogenUtils.toggleVolumePanel(mContext);
                 break;
             case 7: // Screen off
-                PixeldustUtils.switchScreenOff(mContext);
+                NitrogenUtils.switchScreenOff(mContext);
                 break;
             case 8: // Screenshot
-                PixeldustUtils.takeScreenshot(true);
+                NitrogenUtils.takeScreenshot(true);
                 break;
             case 9: // Notification panel
-                PixeldustUtils.toggleNotifications();
+                NitrogenUtils.toggleNotifications();
                 break;
             case 10: // QS panel
-                PixeldustUtils.toggleQsPanel();
+                NitrogenUtils.toggleQsPanel();
                 break;
             case 11: // Clear notifications
-                PixeldustUtils.clearAllNotifications();
+                NitrogenUtils.clearAllNotifications();
                 break;
             case 12: // Ringer modes
-                PixeldustUtils.toggleRingerModes(mContext);
+                NitrogenUtils.toggleRingerModes(mContext);
                 break;
         }
     }

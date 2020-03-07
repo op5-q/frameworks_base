@@ -652,7 +652,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR),
                     false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver()..registerContentObserver(Settings.System.getUriFor(
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LONG_BACK_SWIPE_TIMEOUT),
                     false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
@@ -668,14 +668,21 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         @Override
         public void onChange(boolean selfChange) {
+            setHideArrowForBackGesture();
+            setGestureNavOptions();
             update();
             updateNavigationBarVisibility();
         }
 
         public void update() {
-            if (mStatusBarWindow != null) {
-                mStatusBarWindow.updateSettings();
-            }
+            if (mStatusBarWindow != null){
+             mStatusBarWindow.updateSettings(); }
+            setHeadsUpStoplist();
+            setHeadsUpBlacklist();
+            setStatusDoubleTapToSleep();
+            setLockScreenMediaArt();
+            setHideArrowForBackGesture();
+            setGestureNavOptions();
         }
     }
 
@@ -4066,9 +4073,10 @@ public class StatusBar extends SystemUI implements DemoMode,
               } else if (uri.equals(Settings.System.getUriFor(Settings.System.EDGE_GESTURE_Y_DEAD_ZONE))) {
                 setGestureNavOptions();
               }
-                else if (uri.equals(Settings.System.getUriFor(Settings.System.BACK_SWIPE_EXTENDED)) ||
+		else if (uri.equals(Settings.System.getUriFor(Settings.System.BACK_SWIPE_EXTENDED)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.LONG_BACK_SWIPE_TIMEOUT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.LEFT_LONG_BACK_SWIPE_ACTION)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.RIGHT_LONG_BACK_SWIPE_ACTION))) {
+                    uri.equals(Settings.System.getUriFor(Settings.System.RIGHT_LONG_BACK_SWIPE_ACTION)))  {
                 setGestureNavOptions();
 		}
             	update();

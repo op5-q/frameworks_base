@@ -120,9 +120,6 @@
         <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
     <string name="global_action_screenshot_cust">"Screen/Rec"</string>
 
-	<!-- Omni Record QS tile -->
-    <string name="quick_settings_screenrecord_label">Screenrecord</string>
-
     <!-- Power Menu -->
     <string name="global_action_reboot">Restart</string>
     <string name="global_action_reboot_more">Restart\u2026</string>

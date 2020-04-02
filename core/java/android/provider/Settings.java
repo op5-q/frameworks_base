@@ -10074,14 +10074,9 @@ public final class Settings {
          * @hide
          */
         public static final String TAP_GESTURE = "tap_gesture";
-
+        
         private static final Validator TAP_GESTURE_VALIDATOR = BOOLEAN_VALIDATOR;
 
-        /**
-         * The TCP/IP port to run ADB on, or -1 for USB
-         * @hide
-         */
-        public static final String ADB_PORT = "adb_port";
 
         /**
          * This are the settings to be backed up.

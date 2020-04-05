@@ -4588,9 +4588,14 @@ public final class Settings {
         /** @hide */
         private static final Validator DEVICE_PROXI_CHECK_ENABLED_VALIDATOR =
                 BOOLEAN_VALIDATOR;
-
+                
         /**
-         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         * Screenrecord: video bitrate
+         * @hide
+         */
+        public static final String SCREENRECORD_VIDEO_BITRATE = "screenrecord_video_bitrate";
+
+        /** Whether to pulse ambient on new music tracks
          *
          * @hide
          */

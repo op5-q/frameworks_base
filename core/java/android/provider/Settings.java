@@ -4588,7 +4588,13 @@ public final class Settings {
         /** @hide */
         private static final Validator DEVICE_PROXI_CHECK_ENABLED_VALIDATOR =
                 BOOLEAN_VALIDATOR;
-                
+
+        /**
+         * Screenrecord: audio source
+         * @hide
+         */
+        public static final String SCREENRECORD_AUDIO_SOURCE = "screenrecord_audio_source";
+
         /**
          * Screenrecord: video bitrate
          * @hide

@@ -65,6 +65,7 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
 import com.android.internal.util.nitrogen.NitrogenUtils;
+import com.android.internal.util.hwkeys.ActionHandler;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.assist.AssistManager;
@@ -666,6 +667,9 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 break;
             case 12: // Ringer modes
                 NitrogenUtils.toggleRingerModes(mContext);
+                break;
+            case 13:
+                ActionHandler.killProcess(mContext);
                 break;
         }
     }

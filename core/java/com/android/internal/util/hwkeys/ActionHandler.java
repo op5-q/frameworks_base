@@ -889,7 +889,7 @@ public class ActionHandler {
         }
     }
 
-    private static boolean killProcess(Context context) {
+    public static boolean killProcess(Context context) {
         final int mUserId = ActivityManager.getCurrentUser();
         try {
             return killForegroundAppInternal(context, mUserId);

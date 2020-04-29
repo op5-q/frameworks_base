@@ -529,16 +529,6 @@ public final class PowerManager {
 
     /**
      * The value to pass as the 'reason' argument to reboot() to reboot into
-     * bootloader mode if you need to get to the choppa (cit)
-     * <p>
-     * Requires {@link android.Manifest.permission#REBOOT}).
-     * </p>
-     * @hide
-     */
-    public static final String REBOOT_BOOTLOADER = "bootloader";
-
-    /**
-     * The value to pass as the 'reason' argument to reboot() to reboot into
      * recovery mode for applying system updates.
      * <p>
      * Requires the {@link android.Manifest.permission#RECOVERY}
@@ -1378,24 +1368,6 @@ public final class PowerManager {
             mService.rebootSafeMode(false, true);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * Reboot the device with custom progress meassges.
-     * Will not return if the reboot is successful.
-     * <p>
-     * Requires the {@link android.Manifest.permission#REBOOT} permission.
-     * </p>
-     *
-     * @param reason code to pass to the kernel (e.g., "recovery") to
-     *               request special boot modes, or null.
-     * @hide
-     */
-    public void rebootCustom(String reason) {
-        try {
-            mService.rebootCustom(false, reason, true);
-        } catch (RemoteException e) {
         }
     }
 

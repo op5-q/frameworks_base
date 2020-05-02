@@ -50,8 +50,6 @@ import com.android.systemui.statusbar.phone.UnlockMethodCache;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.volume.VolumeDialogComponent;
 
-import com.google.android.systemui.LiveWallpaperScrimController;
-
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 

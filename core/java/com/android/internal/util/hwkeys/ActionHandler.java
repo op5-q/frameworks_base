@@ -320,7 +320,7 @@ public class ActionHandler {
         return bundle;
     }
 
-    private static final class StatusBarHelper {
+    public static final class StatusBarHelper {
         private static boolean isPreloaded = false;
         private static IStatusBarService mService = null;
 
@@ -416,7 +416,7 @@ public class ActionHandler {
             }
         }
 
-        private static void splitScreen() {
+        public static void splitScreen() {
             IStatusBarService service = getStatusBarService();
             if (service != null) {
                 try {

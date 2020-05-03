@@ -671,6 +671,9 @@ public class EdgeBackGestureHandler implements DisplayListener {
             case 13:
                 ActionHandler.killProcess(mContext);
                 break;
+            case 14:
+                ActionHandler.StatusBarHelper.splitScreen();
+                break;
         }
     }
 

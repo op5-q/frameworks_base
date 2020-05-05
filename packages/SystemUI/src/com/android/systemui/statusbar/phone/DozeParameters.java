@@ -173,8 +173,7 @@ public class DozeParameters implements TunerService.Tunable,
      * @hide
      */
     public boolean getAlwaysOnAfterAmbientLight() {
-        return mAmbientDisplayConfiguration.alwaysOnEnabledSetting(UserHandle.USER_CURRENT) ||
-                mAmbientDisplayConfiguration.alwaysOnChargingEnabled(UserHandle.USER_CURRENT);
+        return mAmbientDisplayConfiguration.alwaysOnEnabledSetting(UserHandle.USER_CURRENT);
     }
 
     /**

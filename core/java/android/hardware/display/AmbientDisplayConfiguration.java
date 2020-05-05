@@ -148,6 +148,11 @@ public class AmbientDisplayConfiguration {
         return !TextUtils.isEmpty(longPressSensorType());
     }
 
+    public boolean alwaysOnEnabledSetting(int user) {
+        boolean alwaysOnEnabled = boolSetting(Settings.Secure.DOZE_ALWAYS_ON, user, mAlwaysOnByDefault ? 1 : 0);
+        return alwaysOnEnabled && alwaysOnAvailable() && !accessibilityInversionEnabled(user);
+    }
+
     /**
      * Returns if Always-on-Display functionality is enabled on the display for a specified user.
      *
@@ -155,8 +160,7 @@ public class AmbientDisplayConfiguration {
      */
     @TestApi
     public boolean alwaysOnEnabled(int user) {
-        return boolSetting(Settings.Secure.DOZE_ALWAYS_ON, user, mAlwaysOnByDefault ? 1 : 0)
-                && alwaysOnAvailable() && !accessibilityInversionEnabled(user) || alwaysOnAmbientLightEnabled(user);
+        return alwaysOnEnabledSetting(user) || alwaysOnAmbientLightEnabled(user);
     }
 
     private boolean boolSettingSystem(String name, int user, int def) {

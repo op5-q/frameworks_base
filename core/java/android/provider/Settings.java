@@ -4871,11 +4871,7 @@ public final class Settings {
         /** @hide */
         private static final Validator OMNI_QS_QUICKBAR_COLUMNS_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
-
-        /**
-         *  Enable statusbar double tap gesture on to put device to sleep
-         * @hide
-         */
+                
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /** @hide */
@@ -4987,16 +4983,6 @@ public final class Settings {
         private static final Validator PULSE_AMBIENT_AUTO_COLOR_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Duration of Ambient edge light in seconds
-         * @hide
-         */
-        public static final String PULSE_AMBIENT_LIGHT_DURATION = "pulse_ambient_light_duration";
-
-        /** @hide */
-        private static final Validator PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
-
-        /**
          * Whether to change the transparency of the qs panel
          * @hide
          */
@@ -5088,6 +5074,16 @@ public final class Settings {
         /** @hide */
         public static final Validator STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
+
+        /**
+         * Stores the java DateFormat string for the date
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
+
+        /** @hide */
+        public static final Validator STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR = ANY_STRING_VALIDATOR;
+
 
         /**
          * Duration of Ambient edge light in seconds

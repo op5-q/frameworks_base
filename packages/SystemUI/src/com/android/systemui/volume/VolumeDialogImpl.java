@@ -562,8 +562,16 @@ public class VolumeDialogImpl implements VolumeDialog,
                     mDeviceProvisionedController.isCurrentUserSetup() &&
                             mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE ?
                             VISIBLE : GONE);
-        }
+        }        
         if (mExpandRows != null) {
+            mExpandRows.setOnLongClickListener(v -> {
+                Events.writeEvent(mContext, Events.EVENT_SETTINGS_CLICK);
+                Intent intent = new Intent(Settings.Panel.ACTION_VOLUME);
+                dismissH(DISMISS_REASON_SETTINGS_CLICKED);
+                Dependency.get(ActivityStarter.class).startActivity(intent,
+                        true /* dismissShade */);
+                return true;
+            });
             mExpandRows.setOnClickListener(v -> {
                 Util.setVisOrGone(findRow(AudioManager.STREAM_RING).view, !mExpanded);
                 Util.setVisOrGone(findRow(STREAM_ALARM).view, !mExpanded);

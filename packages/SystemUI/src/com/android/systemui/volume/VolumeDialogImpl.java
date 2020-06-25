@@ -535,11 +535,6 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
     }
 
-    private boolean isNotificationVolumeLinked() {
-        ContentResolver cr = mContext.getContentResolver();
-        return Settings.Secure.getInt(cr, Settings.Secure.VOLUME_LINK_NOTIFICATION, 1) == 1;
-    }
-    
     public void initSettingsH() {
         if (mExpandRowsView != null) {
             mExpandRowsView.setVisibility(
@@ -562,9 +557,6 @@ public class VolumeDialogImpl implements VolumeDialog,
                             R.drawable.ic_volume_ringer_mute, true, false);
                     addRow(AudioManager.STREAM_ALARM, R.drawable.ic_volume_alarm,
                             R.drawable.ic_volume_alarm_mute, true, false);
-                if (!isNotificationVolumeLinked())
-                    addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_notification,
-                            R.drawable.ic_volume_notification_mute, true, false);
                     updateAllActiveRows();
                     mExpanded = true;
                 } else {

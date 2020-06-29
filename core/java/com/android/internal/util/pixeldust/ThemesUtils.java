@@ -73,6 +73,9 @@ public class ThemesUtils {
             "com.android.theme.icon.cylinder",
             "com.android.theme.icon.hexagon",
             "com.android.theme.icon.square",
+            "com.android.theme.icon.pebble",
+            "com.android.theme.icon.vessel",
+            "com.android.theme.icon.tapered_rect",
     };
 
     public static final String[] PITCH_BLACK = {

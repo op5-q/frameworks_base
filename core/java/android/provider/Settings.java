@@ -4065,13 +4065,21 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_ENABLED = "navbar_pulse_enabled";
+        /** @hide */
+        private static final Validator PULSE_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * Pulse navbar music visualizer color type
-         *
+         * 0 = accent
+         * 1 = custom
+         * 2 = lava lamp
+         * 3 = auto
          * @hide
          */
         public static final String PULSE_COLOR_TYPE = "navbar_pulse_color_type";
+        /** @hide */
+        private static final Validator PULSE_COLOR_TYPE_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
 
         /**
          * Pulse music visualizer user defined color
@@ -4079,6 +4087,9 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_COLOR_USER = "navbar_pulse_color_user";
+        /** @hide */
+        private static final Validator PULSE_COLOR_USER_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Pulse lavalamp animation speed
@@ -4086,67 +4097,101 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_LAVALAMP_SPEED = "navbar_pulse_lavalamp_speed";
+        /** @hide */
+        private static final Validator PULSE_LAVALAMP_SPEED_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Pulse renderer implementation
-         *
+         * 0 = fading bars
+         * 1 = solid lines
          * @hide
          */
         public static final String PULSE_RENDER_STYLE_URI = "navbar_pulse_render_style";
+        /** @hide */
+        private static final Validator PULSE_RENDER_STYLE_URI_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
         /**
          * Custom Pulse Widths
          * @hide
          */
         public static final String PULSE_CUSTOM_DIMEN = "pulse_custom_dimen";
+        /** @hide */
+        private static final Validator PULSE_CUSTOM_DIMEN_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Custom Spacing Between Pulse Bars
          * @hide
          */
         public static final String PULSE_CUSTOM_DIV = "pulse_custom_div";
+        /** @hide */
+        private static final Validator PULSE_CUSTOM_DIV_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Custom Pulse Block Size
          * @hide
          */
         public static final String PULSE_FILLED_BLOCK_SIZE = "pulse_filled_block_size";
+        /** @hide */
+        private static final Validator PULSE_FILLED_BLOCK_SIZE_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Custom Spacing Between Pulse Blocks
          * @hide
          */
         public static final String PULSE_EMPTY_BLOCK_SIZE = "pulse_empty_block_size";
+        /** @hide */
+        private static final Validator PULSE_EMPTY_BLOCK_SIZE_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Custom Pulse Sanity Levels
          * @hide
          */
         public static final String PULSE_CUSTOM_FUDGE_FACTOR = "pulse_custom_fudge_factor";
+        /** @hide */
+        private static final Validator PULSE_CUSTOM_FUDGE_FACTOR_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(2, 6);
 
         /**
          * Pulse Fudge Factor
          * @hide
          */
         public static final String PULSE_SOLID_FUDGE_FACTOR = "pulse_solid_fudge_factor";
+        /** @hide */
+        private static final Validator PULSE_SOLID_FUDGE_FACTOR_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(2, 7);
 
         /**
          * Pulse Solid units count
          * @hide
          */
         public static final String PULSE_SOLID_UNITS_COUNT = "pulse_solid_units_count";
+        /** @hide */
+        private static final Validator PULSE_SOLID_UNITS_COUNT_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Pulse Solid units opacity
          * @hide
          */
         public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
+        /** @hide */
+        private static final Validator PULSE_SOLID_UNITS_OPACITY_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Pulse uses FFT averaging
          * @hide
          */
         public static final String PULSE_SMOOTHING_ENABLED = "pulse_smoothing_enabled";
+        /** @hide */
+        private static final Validator PULSE_SMOOTHING_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether the setup wizard has been run before (on first boot), or if
@@ -5616,6 +5661,20 @@ public final class Settings {
             PULSE_BRIGHTNESS,
             DOZE_BRIGHTNESS,
             OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT,
+            PULSE_ENABLED,
+            PULSE_COLOR_TYPE,
+            PULSE_COLOR_USER,
+            PULSE_LAVALAMP_SPEED,
+            PULSE_RENDER_STYLE_URI,
+            PULSE_CUSTOM_DIMEN,
+            PULSE_CUSTOM_DIV,
+            PULSE_FILLED_BLOCK_SIZE,
+            PULSE_EMPTY_BLOCK_SIZE,
+            PULSE_CUSTOM_FUDGE_FACTOR,
+            PULSE_SOLID_FUDGE_FACTOR,
+            PULSE_SOLID_UNITS_COUNT,
+            PULSE_SOLID_UNITS_OPACITY,
+            PULSE_SMOOTHING_ENABLED,
         };
 
         /**
@@ -5963,6 +6022,20 @@ public final class Settings {
             VALIDATORS.put(PULSE_BRIGHTNESS, PULSE_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(DOZE_BRIGHTNESS, DOZE_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT, OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT_VALIDATOR);
+            VALIDATORS.put(PULSE_ENABLED, PULSE_ENABLED_VALIDATOR);
+            VALIDATORS.put(PULSE_COLOR_TYPE, PULSE_COLOR_TYPE_VALIDATOR);
+            VALIDATORS.put(PULSE_COLOR_USER, PULSE_COLOR_USER_VALIDATOR);
+            VALIDATORS.put(PULSE_LAVALAMP_SPEED, PULSE_LAVALAMP_SPEED_VALIDATOR);
+            VALIDATORS.put(PULSE_RENDER_STYLE_URI, PULSE_RENDER_STYLE_URI_VALIDATOR);
+            VALIDATORS.put(PULSE_CUSTOM_DIMEN, PULSE_CUSTOM_DIMEN_VALIDATOR);
+            VALIDATORS.put(PULSE_CUSTOM_DIV, PULSE_CUSTOM_DIV_VALIDATOR);
+            VALIDATORS.put(PULSE_FILLED_BLOCK_SIZE, PULSE_FILLED_BLOCK_SIZE_VALIDATOR);
+            VALIDATORS.put(PULSE_EMPTY_BLOCK_SIZE, PULSE_EMPTY_BLOCK_SIZE_VALIDATOR);
+            VALIDATORS.put(PULSE_CUSTOM_FUDGE_FACTOR, PULSE_CUSTOM_FUDGE_FACTOR_VALIDATOR);
+            VALIDATORS.put(PULSE_SOLID_FUDGE_FACTOR, PULSE_SOLID_FUDGE_FACTOR_VALIDATOR);
+            VALIDATORS.put(PULSE_SOLID_UNITS_COUNT, PULSE_SOLID_UNITS_COUNT_VALIDATOR);
+            VALIDATORS.put(PULSE_SOLID_UNITS_OPACITY, PULSE_SOLID_UNITS_OPACITY_VALIDATOR);
+            VALIDATORS.put(PULSE_SMOOTHING_ENABLED, PULSE_SMOOTHING_ENABLED_VALIDATOR);
         }
 
         /**

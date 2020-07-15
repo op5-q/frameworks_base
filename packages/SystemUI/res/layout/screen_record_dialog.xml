@@ -48,7 +48,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="bold"
-                android:text="@string/global_action_screenrecord" />
+                android:text="@string/screenrecord_dialog_title" />
 
             <!-- Force low quality -->
             <FrameLayout
@@ -81,7 +81,7 @@
                         android:layout_below="@android:id/title"
                         android:layout_alignStart="@android:id/title"
                         android:layout_marginEnd="140dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
                         android:textColor="?android:attr/textColorSecondary"
                         android:text="@string/screenrecord_video_bitrate_summary" />
 
@@ -133,7 +133,7 @@
                         android:layout_below="@android:id/title"
                         android:layout_alignStart="@android:id/title"
                         android:layout_marginEnd="140dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
                         android:textColor="?android:attr/textColorSecondary"
                         android:text="@string/screenrecord_audio_summary" />
 
@@ -183,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@android:id/title"
                         android:layout_alignStart="@android:id/title"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
                         android:textColor="?android:attr/textColorSecondary"
                         android:text="@string/screenrecord_taps_summary" />
 
@@ -233,8 +233,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@android:id/title"
                         android:layout_alignStart="@android:id/title"
-                        android:layout_marginEnd="90dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_marginEnd="140dp"
+                        android:textSize="12sp"
                         android:textColor="?android:attr/textColorSecondary"
                         android:text="@string/screenrecord_stopdot_summary" />
 

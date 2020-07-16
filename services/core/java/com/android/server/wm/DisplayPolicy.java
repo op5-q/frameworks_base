@@ -590,8 +590,6 @@ public class DisplayPolicy {
 
         if (mDisplayContent.isDefaultDisplay) {
             mHasStatusBar = true;
-            // Register content observer only for main display
-            mSettingsObserver = new SettingsObserver(mHandler);
             mHasNavigationBar = NitrogenUtils.deviceSupportNavigationBar(mContext);
         } else {
             mHasStatusBar = false;
@@ -601,6 +599,7 @@ public class DisplayPolicy {
         mRefreshRatePolicy = new RefreshRatePolicy(mService,
                 mDisplayContent.getDisplayInfo(),
                 mService.mHighRefreshRateBlacklist);
+
     }
 
     void systemReady() {
